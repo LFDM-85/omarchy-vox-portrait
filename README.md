@@ -4,6 +4,36 @@ A theme-adaptive Omarchy shell plugin for Voxtype 1.0.1. The neural portrait
 responds to real microphone levels, animates during transcription, and
 progressively reveals recognized text.
 
+## Install
+
+Requirements: Omarchy with the shell plugin system and a working local
+Voxtype installation. Review the repository before enabling it: Omarchy
+plugins run unsandboxed inside the long-lived shell process.
+
+```sh
+omarchy plugin add https://github.com/LFDM-85/omarchy-vox-portrait.git --enable
+```
+
+Then merge the following into `~/.config/voxtype/config.toml`. Replace
+`your-user` with your Linux username. `output.post_process` supports one
+command, so preserve or intentionally replace any existing command in that
+section.
+
+```toml
+[osd]
+enabled = false
+
+[output.post_process]
+command = "python3 /home/your-user/.config/omarchy/plugins/luismelo.vox-portrait/capture.py"
+timeout_ms = 1000
+```
+
+Apply the Voxtype configuration:
+
+```sh
+systemctl --user restart voxtype
+```
+
 ## Usage
 
 Use your existing Voxtype shortcut. The overlay appears during recording
@@ -48,11 +78,16 @@ it does not confirm each keystroke delivered to the destination application.
 Processing means transcription, not access to internal AI reasoning. No new
 external audio or transcript service is used.
 
-## Disable
+## Remove
 
-Remove `luismelo.vox-portrait` from `plugins` in shell.json, remove the active
-`[output.post_process]` section calling capture.py, and set `[osd] enabled`
-to `true` in the Voxtype configuration. Run `systemctl --user restart voxtype`.
+First remove the `output.post_process` command that calls `capture.py` from
+`~/.config/voxtype/config.toml`, set `[osd] enabled` to `true` if you want the
+built-in Voxtype interface back, then restart Voxtype:
+
+```sh
+systemctl --user restart voxtype
+omarchy plugin remove luismelo.vox-portrait
+```
 
 Original configuration backups have the `.before-vox-portrait` suffix.
 
@@ -60,3 +95,7 @@ Original configuration backups have the `.before-vox-portrait` suffix.
 
 `neural-portrait.png` was generated with the built-in image generation tool.
 The full production prompt is recorded in `artwork-prompt.txt`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
