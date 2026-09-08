@@ -28,6 +28,33 @@ command = "python3 /home/your-user/.config/omarchy/plugins/luismelo.vox-portrait
 timeout_ms = 1000
 ```
 
+## Fast local profile
+
+The portrait only displays the result; transcription speed is determined by
+Voxtype. For a CPU-only Portuguese setup, this balanced profile is recommended:
+
+```toml
+[whisper]
+model = "base"
+language = "pt"
+threads = 6
+
+[vad]
+enabled = true
+backend = "energy"
+threshold = 0.35
+
+[output]
+pre_type_delay_ms = 100
+type_delay_ms = 0
+```
+
+`base` is multilingual and much lighter than `small`, while retaining good
+dictation quality. Use one valid language code such as `pt` or `en`; with
+Voxtype 1.0.1, a comma-separated value can reach whisper.cpp as an invalid
+language and trigger an avoidable fallback. VAD prevents silence and accidental
+short recordings from spending time in the transcriber.
+
 Apply the Voxtype configuration:
 
 ```sh
