@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "luismelo.vox-portrait",
+  "name": "Vox Portrait",
+  "version": "1.1.0",
+  "author": "Luis Melo",
+  "description": "Theme-adaptive neural portrait and voice-reactive transcription overlay for Voxtype",
+  "kinds": ["service"],
+  "keepLoaded": true,
+  "entryPoints": {"service": "Service.qml"}
+}

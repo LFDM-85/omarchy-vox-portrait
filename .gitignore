@@ -1,0 +1,4 @@
+# Local working copies and unused source artwork.
+*.before-*
+portrait.png
+__pycache__/
